@@ -3,216 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MONA Hub | Dra. Marcela Marques</title>
+    <title>MONA Hub | Governança DAO</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --primary: #8a2be2;
-            --accent: #d4af37;
-            --dark: #0f0f0f;
+            --primary: #8a2be2; --accent: #d4af37; --dark: #0f0f0f;
             --gradient: linear-gradient(135deg, #8a2be2 0%, #ff007f 100%);
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass: rgba(255, 255, 255, 0.03); --glass-border: rgba(255, 255, 255, 0.1);
         }
-
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background: var(--dark);
-            color: #fff; 
-            margin: 0; 
-            overflow-x: hidden;
-            padding-bottom: 100px;
-        }
-
-        /* Efeito de fundo animado */
-        .bg-glow {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% -20%, #2d1b4e, transparent);
-            z-index: -1;
-        }
-
-        header { 
-            padding: 3rem 1.5rem; text-align: center;
-            background: rgba(0,0,0,0.4);
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        header h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin: 0; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
+        body { font-family: 'Inter', sans-serif; background: var(--dark); color: #fff; margin: 0; padding-bottom: 100px; }
+        .bg-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% -20%, #2d1b4e, transparent); z-index: -1; }
+        header { padding: 2rem 1rem; text-align: center; background: rgba(0,0,0,0.4); border-bottom: 1px solid var(--glass-border); }
+        header h1 { font-family: 'Playfair Display', serif; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin:0; }
         .container { padding: 20px; max-width: 480px; margin: auto; }
+        .card { background: var(--glass); backdrop-filter: blur(15px); border-radius: 24px; padding: 25px; margin-bottom: 20px; border: 1px solid var(--glass-border); }
+        .btn-action { background: var(--gradient); color: white; border: none; padding: 12px; border-radius: 12px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; }
         
-        .card { 
-            background: var(--glass); 
-            backdrop-filter: blur(15px);
-            border-radius: 24px; 
-            padding: 25px; 
-            margin-bottom: 20px; 
-            border: 1px solid var(--glass-border);
-            transition: transform 0.3s ease;
-        }
-        .card:active { transform: scale(0.98); }
-
-        /* Interatividade do Token */
-        .token-card { text-align: center; border: 1px solid var(--accent); }
-        .token-val { font-size: 2.8rem; font-weight: bold; font-family: 'Playfair Display', serif; color: var(--accent); text-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
-
-        /* Barra de Progresso Animada */
-        .progress-container { background: rgba(255,255,255,0.1); border-radius: 20px; height: 14px; margin: 20px 0; position: relative; }
-        .progress-fill { 
-            background: var(--gradient); 
-            height: 100%; border-radius: 20px; width: 0%; 
-            transition: width 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-            box-shadow: 0 0 15px var(--primary);
-        }
-
-        /* Botões Interativos */
-        .btn-action {
-            background: var(--gradient); color: white; border: none; padding: 15px;
-            border-radius: 15px; width: 100%; font-weight: bold; cursor: pointer;
-            margin-top: 10px; text-transform: uppercase; letter-spacing: 1px;
-        }
-
-        /* Vagas com Hover */
-        .vaga-item {
-            padding: 15px; border-radius: 12px; margin-bottom: 10px;
-            background: rgba(255,255,255,0.05); border: 1px solid transparent;
-        }
-        .vaga-item:hover { border-color: var(--primary); background: rgba(138, 43, 226, 0.1); }
-
-        /* Menu Inferior Futurista */
-        .nav-bar { 
-            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
-            width: 85%; background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(20px);
-            display: flex; justify-content: space-around; padding: 18px; 
-            border-radius: 40px; border: 1px solid var(--glass-border);
-        }
-        .nav-item { cursor: pointer; opacity: 0.5; transition: 0.3s; font-size: 1.2rem; }
-        .nav-item.active { opacity: 1; color: var(--accent); transform: translateY(-5px); }
-
-        .hidden { display: none; opacity: 0; }
-        .fade-in { animation: fadeIn 0.5s forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* Estilo DAO */
+        .vote-card { border-left: 4px solid var(--accent); padding-left: 15px; margin-top: 15px; }
+        .vote-bar { background: rgba(255,255,255,0.1); height: 8px; border-radius: 4px; margin: 8px 0; overflow: hidden; }
+        .vote-fill { background: var(--accent); height: 100%; width: 45%; transition: 0.5s; }
+        
+        .nav-bar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: rgba(20,20,20,0.9); display: flex; justify-content: space-around; padding: 15px; border-radius: 30px; border: 1px solid var(--glass-border); }
+        .nav-item { cursor: pointer; opacity: 0.5; font-size: 1.2rem; }
+        .nav-item.active { opacity: 1; color: var(--accent); }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
-
 <div class="bg-glow"></div>
-
 <header>
     <h1>MONA HUB</h1>
-    <p style="color: var(--accent); font-size: 0.7rem; letter-spacing: 3px;">Dra. Marcela Marques • Web3 Ecosystem</p>
+    <p style="color: var(--accent); font-size: 0.7rem; letter-spacing: 2px;">GOVERNANÇA & IMPACTO</p>
 </header>
 
 <div class="container">
-    <section id="home" class="fade-in">
-        <div class="card">
-            <h3 style="margin-top:0">Seu Impacto Social</h3>
-            <p style="font-size: 0.9rem; opacity: 0.7;">Formação ELITE-F concluída:</p>
-            <div class="progress-container"><div id="main-progress" class="progress-fill"></div></div>
-            <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
-                <span id="prog-text">0%</span>
-                <span>Nível: Liderança Senior</span>
-            </div>
+    <section id="home">
+        <div class="card" style="text-align: center;">
+            <p style="margin:0; font-size: 0.8rem; color: var(--accent);">VALOR DO TOKEN MONA</p>
+            <div style="font-size: 2.5rem; font-family: 'Playfair Display';" id="token-price">R$ 14,82</div>
+            <canvas id="miniChart" height="80"></canvas>
         </div>
-
-        <div class="card token-card">
-            <p style="margin:0; font-size: 0.8rem; letter-spacing: 1px;">VALOR EM TEMPO REAL</p>
-            <div class="token-val" id="token-price">R$ 14,82</div>
-            <canvas id="miniChart" height="100"></canvas>
-            <button class="btn-action" onclick="alert('Conectando à Tesouraria Web3...')">Resgatar Dividendos</button>
+        <div class="card">
+            <h3>Seu Poder de Voto</h3>
+            <p style="font-size: 1.2rem; color: var(--accent);">1.240 MONA</p>
+            <small>Peso de governança: 1.2x (Nível Sênior)</small>
         </div>
     </section>
 
     <section id="wallet" class="hidden">
         <div class="card">
-            <h3>Ativos Regenerativos</h3>
-            <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; margin-bottom: 15px;">
-                <small>Saldo Disponível</small>
-                <h2 style="color: var(--accent); margin: 5px 0;">1.240,50 MONA</h2>
-                <small style="color: #00ff88;">≈ R$ 18.384,21</small>
+            <h3>Estúdio Criativo</h3>
+            <p style="font-size: 0.8rem; opacity: 0.7;">Transforme sua biografia ou arte em um ativo Web3 inquestionável.</p>
+            <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; text-align: center;">
+                <p>🎨 Obra: "Resiliência Surrealista"</p>
+                <button class="btn-action" onclick="alert('Iniciando Mint de um clique na rede Base...\nTaxa paga pela Tesouraria MONA.')">MINTAR NFT (Um clique)</button>
             </div>
-            <p style="font-size: 0.9rem;">Histórico de Recompensas</p>
-            <div id="history-list"></div>
         </div>
     </section>
 
-    <section id="opportunities" class="hidden">
+    <section id="dao" class="hidden">
         <div class="card">
-            <h3>Mural de Conexões</h3>
-            <div class="vaga-item">
-                <strong style="color: var(--accent);">BTG Pactual</strong><br>
-                <small>Analista de Dados ESG (Exclusivo ELITE-F)</small>
+            <h3 style="color: var(--accent);">Votações Ativas (DAO)</h3>
+            <p style="font-size: 0.8rem;">Sua participação decide o destino da Tesouraria.</p>
+            
+            <div class="vote-card">
+                <strong>Destino do Fundo de Expansão Q2</strong>
+                <p style="font-size: 0.7rem;">Onde devemos focar o próximo investimento da Tesouraria?</p>
+                
+                <span>Opção A: Novas Bolsas Permanência</span>
+                <div class="vote-bar"><div id="v-bar1" class="vote-fill" style="width: 62%"></div></div>
+                
+                <span>Opção B: Infraestrutura de IA em Rio Preto</span>
+                <div class="vote-bar"><div id="v-bar2" class="vote-fill" style="width: 38%"></div></div>
+                
+                <button class="btn-action" style="background: transparent; border: 1px solid var(--accent); color: var(--accent);" onclick="castVote()">VOTAR COM MEUS 1.240 MONA</button>
             </div>
-            <div class="vaga-item">
-                <strong style="color: var(--accent);">ConsenSys</strong><br>
-                <small>Desenvolvedora Web3 Junior</small>
-            </div>
-            <button class="btn-action" style="background: transparent; border: 1px solid var(--accent); color: var(--accent);">Submeter Portfólio IA</button>
         </div>
     </section>
 </div>
 
 <nav class="nav-bar">
-    <div class="nav-item active" onclick="show('home', this)">✦</div>
-    <div class="nav-item" onclick="show('wallet', this)">💰</div>
-    <div class="nav-item" onclick="show('opportunities', this)">🚀</div>
+    <div class="nav-item active" onclick="show('home', this)">🏠</div>
+    <div class="nav-item" onclick="show('wallet', this)">🎨</div>
+    <div class="nav-item" onclick="show('dao', this)">⚖️</div>
 </nav>
 
 <script>
-    // 1. Animação da Barra de Progresso ao carregar
-    window.onload = () => {
-        setTimeout(() => {
-            document.getElementById('main-progress').style.width = '72%';
-            document.getElementById('prog-text').innerText = '72%';
-        }, 500);
-        renderChart();
-        updatePrice();
-    };
-
-    // 2. Gráfico Interativo de Simulação
-    function renderChart() {
-        const ctx = document.getElementById('miniChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai'],
-                datasets: [{
-                    label: 'Valor MONA',
-                    data: [10, 12, 11, 14, 14.82],
-                    borderColor: '#d4af37',
-                    tension: 0.4,
-                    borderWidth: 2,
-                    pointRadius: 0
-                }]
-            },
-            options: { plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } } }
-        });
-    }
-
-    // 3. Simulação de Preço Oscilando
-    function updatePrice() {
-        setInterval(() => {
-            let current = 14.82;
-            let change = (Math.random() * 0.1 - 0.05).toFixed(2);
-            document.getElementById('token-price').innerText = `R$ ${(parseFloat(current) + parseFloat(change)).toFixed(2)}`;
-        }, 3000);
-    }
-
-    // 4. Navegação com Animação
     function show(sectionId, element) {
-        document.querySelectorAll('section').forEach(s => {
-            s.classList.add('hidden');
-            s.classList.remove('fade-in');
-        });
-        const activeSection = document.getElementById(sectionId);
-        activeSection.classList.remove('hidden');
-        activeSection.classList.add('fade-in');
-
+        document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+        document.getElementById(sectionId).classList.remove('hidden');
         document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
         element.classList.add('active');
     }
-</script>
 
+    function castVote() {
+        alert("Voto processado na Blockchain! Seu peso de 1.240 MONA foi contabilizado.");
+        document.getElementById('v-bar1').style.width = "75%";
+        document.getElementById('v-bar2').style.width = "25%";
+    }
+
+    // Chart de simulação
+    const ctx = document.getElementById('miniChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: { labels: ['A','B','C','D','E'], datasets: [{ data: [14.1, 14.3, 13.9, 14.5, 14.82], borderColor: '#d4af37', tension: 0.4, pointRadius: 0 }] },
+        options: { plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } } }
+    });
+</script>
 </body>
 </html>
