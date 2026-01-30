@@ -21,15 +21,17 @@
         .card { background: var(--glass); backdrop-filter: blur(15px); border-radius: 24px; padding: 25px; margin-bottom: 20px; border: 1px solid var(--glass-border); animation: fadeIn 0.5s forwards; }
         
         .token-val { font-size: 2.5rem; font-weight: bold; font-family: 'Playfair Display', serif; color: var(--accent); text-align: center; margin: 10px 0; }
-        .btn-action { background: var(--gradient); color: white; border: none; padding: 14px; border-radius: 12px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; text-transform: uppercase; }
+        .btn-action { background: var(--gradient); color: white; border: none; padding: 14px; border-radius: 12px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; text-transform: uppercase; font-size: 0.8rem; }
         
-        .item-list { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 15px; margin-bottom: 10px; border-left: 4px solid var(--primary); cursor: pointer; transition: 0.3s; }
-        .item-list:hover { background: rgba(255,255,255,0.1); }
-        
-        .vote-bar { background: rgba(255,255,255,0.1); height: 8px; border-radius: 4px; margin: 8px 0; overflow: hidden; }
-        .vote-fill { background: var(--accent); height: 100%; width: 50%; transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1); }
+        /* Novos Botões Financeiros */
+        .btn-finance { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid var(--glass-border); padding: 10px; border-radius: 10px; width: 48%; cursor: pointer; font-size: 0.7rem; font-weight: 600; transition: 0.3s; }
+        .btn-finance:hover { background: var(--glass-border); border-color: var(--accent); }
+        .finance-group { display: flex; justify-content: space-between; margin-top: 15px; }
 
-        /* Estilo da Janela de Detalhes (Modal) */
+        .item-list { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 15px; margin-bottom: 10px; border-left: 4px solid var(--primary); cursor: pointer; transition: 0.3s; }
+        .vote-bar { background: rgba(255,255,255,0.1); height: 8px; border-radius: 4px; margin: 8px 0; overflow: hidden; }
+        .vote-fill { background: var(--accent); height: 100%; width: 50%; transition: 1s; }
+
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); display: none; justify-content: center; align-items: center; z-index: 1000; }
         .modal-content { background: #1a1a1a; padding: 30px; border-radius: 24px; width: 85%; max-width: 400px; border: 1px solid var(--accent); position: relative; }
         .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: var(--accent); }
@@ -58,7 +60,7 @@
 
 <header>
     <h1>MONA HUB</h1>
-    <p style="color: var(--accent); font-size: 0.7rem; letter-spacing: 2px;">Dra. Marcela Marques • Versão Aprimorada</p>
+    <p style="color: var(--accent); font-size: 0.7rem; letter-spacing: 2px;">Dra. Marcela Marques • Finanças & Impacto</p>
 </header>
 
 <div class="container">
@@ -77,15 +79,22 @@
 
     <section id="wallet" class="hidden">
         <div class="card">
-            <h3>Minha Carteira</h3>
-            <h2 style="color: var(--accent); margin: 0;">1.240,50 MONA</h2>
-            <p style="font-size: 0.8rem; opacity: 0.7;">Equivalente a R$ 18.384,21</p>
+            <h3 style="margin-top:0">Ativos Digitais</h3>
+            <p style="font-size: 0.8rem; opacity: 0.7; margin: 0;">Saldo Disponível</p>
+            <h2 style="color: var(--accent); margin: 5px 0;">1.240,50 MONA</h2>
+            <p style="font-size: 0.8rem; opacity: 0.7;">≈ R$ 18.384,21</p>
+            
+            <div class="finance-group">
+                <button class="btn-finance" onclick="alert('Iniciando conversão para BRL...\nDestino: Conta Corrente Cadastrada.')">🏦 SACAR</button>
+                <button class="btn-finance" onclick="alert('Informe o endereço da carteira de destino para transferência On-Chain.')">↗️ TRANSFERIR</button>
+            </div>
         </div>
         <div class="card">
-            <h3>Mint de Um Clique</h3>
+            <h3>Estúdio de Criação</h3>
             <div class="item-list" style="border-color: var(--accent); cursor: default;">
                 <strong>Obra: "Biografia Surrealista"</strong><br>
-                <button class="btn-action" onclick="alert('Mintando NFT na rede Base...')">MINTAR AGORA</button>
+                <small>NFT Gerado via IA</small>
+                <button class="btn-action" onclick="alert('Iniciando Mint de um clique...')">MINTAR NFT</button>
             </div>
         </div>
     </section>
@@ -104,14 +113,11 @@
     <section id="opportunities" class="hidden">
         <div class="card">
             <h3>Mural de Vagas</h3>
-            <p style="font-size: 0.7rem; opacity: 0.6; margin-bottom: 15px;">Atualizado via elite-f.web.app</p>
-            
-            <div class="item-list" onclick="openJob('Analista de Dados ESG', 'BTG Pactual', 'Vaga exclusiva para lideranças do projeto MONA. Requisitos: Domínio de IA e certificação ELITE-F nível sênior.')">
+            <div class="item-list" onclick="openJob('Analista de Dados ESG', 'BTG Pactual', 'Requisitos: Domínio de IA e certificação ELITE-F.')">
                 <strong style="color: var(--accent);">BTG Pactual</strong><br>
                 <small>Analista de ESG</small>
             </div>
-            
-            <div class="item-list" onclick="openJob('Dev Web3 Junior', 'ConsenSys', 'Oportunidade para atuar com contratos inteligentes. Necessário conhecimento em Solidity e Web3.js demonstrado no projeto final.')">
+            <div class="item-list" onclick="openJob('Dev Web3 Junior', 'ConsenSys', 'Oportunidade para atuar com contratos inteligentes.')">
                 <strong style="color: var(--accent);">ConsenSys</strong><br>
                 <small>Dev Web3 Junior</small>
             </div>
@@ -144,12 +150,12 @@
     function closeJob() { document.getElementById('jobModal').style.display = 'none'; }
 
     function applyJob() {
-        alert("Sucesso! Seu currículo validado pelo ELITE-F foi enviado para o RH da " + document.getElementById('modalCompany').innerText + ".");
+        alert("Currículo enviado com sucesso!");
         closeJob();
     }
 
     function castVote() {
-        alert("Voto processado na Blockchain!");
+        alert("Voto processado!");
         document.getElementById('v-bar1').style.width = "85%";
     }
 
