@@ -98,8 +98,9 @@
     <section id="wallet" class="hidden">
         <div class="card" style="border-color: var(--primary);">
             <h3 style="margin-top:0; font-family: 'Playfair Display';">Ativos On-Chain</h3>
-            <p style="font-size: 0.8rem; opacity: 0.5; margin: 0;">Disponível para Resgate</p>
+            <p style="font-size: 0.8rem; opacity: 0.5; margin: 0;">Saldo Disponível</p>
             <h2 style="color: var(--accent); font-size: 2.2rem; margin: 10px 0; font-weight: 900;">1.240,50 MONA</h2>
+            <p id="total-brl" style="font-size: 0.9rem; opacity: 0.8; font-weight: 600; margin-bottom: 15px;">≈ R$ 18.384,21</p>
             
             <div class="finance-group">
                 <button class="btn-finance" onclick="alert('Iniciando conversão para BRL...')">🏦 SACAR</button>
@@ -186,7 +187,11 @@
     setInterval(() => {
         let base = 14.82;
         let osc = (Math.random() * 0.10 - 0.05).toFixed(2);
-        document.getElementById('token-price').innerText = `R$ ${(parseFloat(base) + parseFloat(osc)).toFixed(2)}`;
+        let newVal = (parseFloat(base) + parseFloat(osc)).toFixed(2);
+        document.getElementById('token-price').innerText = `R$ ${newVal}`;
+        // Atualiza proporcionalmente o saldo total em reais na tela 2
+        let totalBrl = (1240.50 * newVal).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        document.getElementById('total-brl').innerText = `≈ ${totalBrl}`;
     }, 2000);
 </script>
 </body>
